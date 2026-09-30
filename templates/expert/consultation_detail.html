@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Consultation Details</title>
+</head>
+
+<body>
+
+    <a href="{{ url_for('expert.consultations') }}">
+        ← Back to Consultations
+    </a>
+
+    <h1>Consultation Details</h1>
+
+    <hr>
+
+    <h2>
+        {{ consultation["subject"] }}
+    </h2>
+
+    <p>
+        <strong>Student:</strong>
+        {{ consultation["student_name"] }}
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        {{ consultation["student_email"] }}
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        {{ consultation["status"] }}
+    </p>
+
+    <hr>
+
+    <h3>Student's Concern</h3>
+
+    <p>
+        {{ consultation["concern"] }}
+    </p>
+
+    <hr>
+
+    <h3>Medical Expert Response</h3>
+
+    <form method="POST"
+          action="{{ url_for(
+              'expert.respond_consultation',
+              consultation_id=consultation['id']
+          ) }}">
+
+        <textarea
+            name="expert_response"
+            rows="8"
+            cols="70"
+            placeholder="Enter your response..."
+            required
+        >{{ consultation["expert_response"] or "" }}</textarea>
+
+        <br><br>
+
+        <button type="submit">
+            Submit Response
+        </button>
+
+    </form>
+
+    <br>
+
+    {% if consultation["status"] != "Completed" %}
+
+        <form method="POST"
+              action="{{ url_for(
+                  'expert.complete_consultation',
+                  consultation_id=consultation['id']
+              ) }}">
+
+            <button type="submit">
+                Mark as Completed
+            </button>
+
+        </form>
+
+    {% endif %}
+
+</body>
+
+</html>

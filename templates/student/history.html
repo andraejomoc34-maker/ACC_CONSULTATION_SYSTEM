@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Consultation History</title>
+
+    <style>
+
+        body {
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f7fb;
+        }
+
+        .container {
+            width: 90%;
+
+            max-width: 1000px;
+
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.05);
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            text-align: left;
+        }
+
+        th {
+            color: #6b7280;
+        }
+
+        a {
+            color: #2563eb;
+
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Consultation History
+    </h1>
+
+    <p>
+        Your completed and responded consultations.
+    </p>
+
+
+    <div class="card">
+
+        {% if consultations %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Subject</th>
+
+                    <th>Expert</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for consultation in consultations %}
+
+                <tr>
+
+                    <td>
+                        #{{ consultation["id"] }}
+                    </td>
+
+                    <td>
+                        {{ consultation["subject"] }}
+                    </td>
+
+                    <td>
+                        {{ consultation["expert_name"] or "Not assigned" }}
+                    </td>
+
+                    <td>
+                        {{ consultation["status"] }}
+                    </td>
+
+                    <td>
+                        {{ consultation["created_at"] }}
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{{ url_for(
+                                'student.consultation_detail',
+                                consultation_id=consultation['id']
+                            ) }}"
+                        >
+                            View
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>
+            No consultation history yet.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Consultations | ACC System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #0f766e;
+            color: white;
+            padding: 25px 18px;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .brand small {
+            display: block;
+            font-size: 11px;
+            opacity: .7;
+            margin-top: 5px;
+        }
+
+        .nav {
+            display: block;
+            padding: 13px;
+            margin-bottom: 7px;
+            color: white;
+            text-decoration: none;
+            border-radius: 9px;
+        }
+
+        .nav:hover,
+        .nav.active {
+            background: rgba(255,255,255,.15);
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 25px;
+            left: 18px;
+            right: 18px;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .back {
+            color: #0f766e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .consultation {
+            background: white;
+            padding: 24px;
+            border-radius: 15px;
+            margin-bottom: 18px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 15px rgba(0,0,0,.04);
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .student {
+            margin-top: 12px;
+            color: #4b5563;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 15px;
+            background: #0f766e;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 15px;
+            color: #9ca3af;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            ACC System
+            <small>Consultation Portal</small>
+        </div>
+
+        <a class="nav"
+           href="{{ url_for('expert.dashboard') }}">
+            ▦ Dashboard
+        </a>
+
+        <a class="nav active"
+           href="{{ url_for('expert.consultations') }}">
+            ☷ Consultations
+        </a>
+
+        <div class="logout">
+
+            <a class="nav"
+               href="{{ url_for('auth.logout') }}">
+                ↪ Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="header">
+
+            <div>
+
+                <h1>My Consultations</h1>
+
+                <p>
+                    Manage student consultation requests.
+                </p>
+
+            </div>
+
+            <a class="back"
+               href="{{ url_for('expert.dashboard') }}">
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        {% if consultations %}
+
+            {% for consultation in consultations %}
+
+                <div class="consultation">
+
+                    <div class="top">
+
+                        <div class="subject">
+                            {{ consultation["subject"] }}
+                        </div>
+
+                        <span class="status">
+                            {{ consultation["status"] }}
+                        </span>
+
+                    </div>
+
+                    <div class="student">
+
+                        <strong>Student:</strong>
+                        {{ consultation["student_name"] }}
+
+                        <br>
+
+                        <strong>Email:</strong>
+                        {{ consultation["student_email"] }}
+
+                    </div>
+
+                    <a
+                        class="button"
+                        href="{{ url_for(
+                            'expert.consultation_detail',
+                            consultation_id=consultation['id']
+                        ) }}"
+                    >
+                        View Consultation
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+
+                <h2>📋</h2>
+
+                <h3>No Consultations</h3>
+
+                <p>
+                    You currently have no assigned student consultations.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

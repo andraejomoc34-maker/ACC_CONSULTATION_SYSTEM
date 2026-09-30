@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Consultation #{{ consultation["id"] }}
+    </title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            color: #6b7280;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .value {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .response {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Consultation #{{ consultation["id"] }}
+        </h1>
+
+
+        <div class="field">
+
+            <div class="label">
+                Student
+            </div>
+
+            <div class="value">
+                {{ consultation["student_name"] }}
+                —
+                {{ consultation["student_email"] }}
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <div class="label">
+                Medical Expert
+            </div>
+
+            <div class="value">
+                {{ consultation["expert_name"] or "Not assigned" }}
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <div class="label">
+                Type
+            </div>
+
+            <div class="value">
+                {{ consultation["consultation_type"] }}
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <div class="label">
+                Subject
+            </div>
+
+            <div class="value">
+                {{ consultation["subject"] }}
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <div class="label">
+                Student Concern
+            </div>
+
+            <div class="value">
+                {{ consultation["concern"] }}
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <div class="label">
+                Additional Information
+            </div>
+
+            <div class="value">
+                {{ consultation["additional_information"] or "None provided." }}
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <div class="label">
+                Status
+            </div>
+
+            <div class="value">
+                {{ consultation["status"] }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% if consultation["expert_response"] %}
+
+    <div class="card response">
+
+        <h2>
+            Medical Expert Response
+        </h2>
+
+        <div class="value">
+            {{ consultation["expert_response"] }}
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <a href="{{ url_for('admin.consultations') }}">
+        Back to Consultations
+    </a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Create User</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+        }
+
+        button,
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 11px 18px;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        button {
+            border: none;
+            background: #111827;
+            color: white;
+        }
+
+        a {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Create User
+        </h1>
+
+        <form method="POST">
+
+            <label>
+                Full Name *
+            </label>
+
+            <input
+                type="text"
+                name="full_name"
+                required
+            >
+
+
+            <label>
+                Email *
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                required
+            >
+
+
+            <label>
+                Password *
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                required
+            >
+
+
+            <label>
+                Role *
+            </label>
+
+            <select name="role" required>
+
+                <option value="">
+                    Select role
+                </option>
+
+                <option value="student">
+                    Student
+                </option>
+
+                <option value="medical_expert">
+                    Medical Expert
+                </option>
+
+                <option value="super_admin">
+                    Super Admin
+                </option>
+
+            </select>
+
+
+            <br>
+
+            <button type="submit">
+                Create User
+            </button>
+
+            <a href="{{ url_for('admin.users') }}">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

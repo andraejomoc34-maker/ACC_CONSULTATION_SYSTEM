@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Edit User</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+        }
+
+        button,
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 11px 18px;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        button {
+            border: none;
+            background: #2563eb;
+            color: white;
+        }
+
+        a {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Edit User
+        </h1>
+
+        <form method="POST">
+
+            <label>
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                name="full_name"
+                value="{{ user['full_name'] }}"
+                required
+            >
+
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                value="{{ user['email'] }}"
+                required
+            >
+
+
+            <label>
+                Role
+            </label>
+
+            <select name="role">
+
+                <option
+                    value="student"
+                    {% if user["role"] == "student" %}
+                        selected
+                    {% endif %}
+                >
+                    Student
+                </option>
+
+                <option
+                    value="medical_expert"
+                    {% if user["role"] == "medical_expert" %}
+                        selected
+                    {% endif %}
+                >
+                    Medical Expert
+                </option>
+
+                <option
+                    value="super_admin"
+                    {% if user["role"] == "super_admin" %}
+                        selected
+                    {% endif %}
+                >
+                    Super Admin
+                </option>
+
+            </select>
+
+
+            <label>
+                Account Status
+            </label>
+
+            <select name="status">
+
+                <option
+                    value="Active"
+                    {% if user["status"] == "Active" %}
+                        selected
+                    {% endif %}
+                >
+                    Active
+                </option>
+
+                <option
+                    value="Inactive"
+                    {% if user["status"] == "Inactive" %}
+                        selected
+                    {% endif %}
+                >
+                    Inactive
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Save Changes
+            </button>
+
+            <a href="{{ url_for('admin.users') }}">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

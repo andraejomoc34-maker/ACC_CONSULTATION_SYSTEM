@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Activity Logs</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            color: #6b7280;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Activity Logs
+    </h1>
+
+    <p>
+        Recent system activities.
+    </p>
+
+
+    <div class="card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                    <th>Description</th>
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for log in logs %}
+
+                <tr>
+
+                    <td>
+                        {{ log["full_name"] or "System" }}
+                    </td>
+
+                    <td>
+                        {{ log["email"] or "-" }}
+                    </td>
+
+                    <td>
+                        {{ log["action"] }}
+                    </td>
+
+                    <td>
+                        {{ log["description"] }}
+                    </td>
+
+                    <td>
+                        {{ log["created_at"] }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medical Expert Dashboard | ACC Consultation System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #0f766e;
+            color: white;
+            padding: 25px 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: white;
+            color: #0f766e;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .brand h2 {
+            font-size: 17px;
+        }
+
+        .brand span {
+            display: block;
+            font-size: 11px;
+            opacity: .75;
+            margin-top: 3px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: .6;
+            margin: 20px 12px 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            margin-bottom: 6px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255,255,255,.15);
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 25px;
+            left: 18px;
+            right: 18px;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 35px;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+        }
+
+        .expert-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ccfbf1;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .profile-info span {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .content {
+            padding: 35px;
+        }
+
+        .welcome {
+            background: linear-gradient(135deg, #0f766e, #115e59);
+            color: white;
+            padding: 28px;
+            border-radius: 18px;
+            margin-bottom: 28px;
+        }
+
+        .welcome h2 {
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+        .welcome p {
+            opacity: .85;
+        }
+
+        /* STAT CARDS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 22px;
+            border: 1px solid #e5e7eb;
+            transition: .2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,.06);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 11px;
+            background: #ccfbf1;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-card h3 {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        /* TABLE */
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+        }
+
+        .view-all {
+            color: #0f766e;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f9fafb;
+            color: #6b7280;
+            font-size: 12px;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 14px 20px;
+        }
+
+        td {
+            padding: 16px 20px;
+            border-top: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .student {
+            font-weight: 600;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .action {
+            color: #0f766e;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 70px;
+                padding: 20px 10px;
+            }
+
+            .brand h2,
+            .brand span,
+            .menu-title,
+            .nav-link span {
+                display: none;
+            }
+
+            .brand {
+                justify-content: center;
+            }
+
+            .nav-link {
+                justify-content: center;
+            }
+
+            .main {
+                margin-left: 70px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            A
+        </div>
+
+        <div>
+            <h2>ACC System</h2>
+            <span>Consultation Portal</span>
+        </div>
+
+    </div>
+
+    <div class="menu-title">
+        Medical Expert
+    </div>
+
+    <a href="{{ url_for('expert.dashboard') }}"
+       class="nav-link active">
+
+        <div class="nav-icon">▦</div>
+
+        <span>Dashboard</span>
+
+    </a>
+
+    <a href="{{ url_for('expert.consultations') }}"
+       class="nav-link">
+
+        <div class="nav-icon">☷</div>
+
+        <span>Consultations</span>
+
+    </a>
+
+    <div class="logout">
+
+        <a href="{{ url_for('auth.logout') }}"
+           class="nav-link">
+
+            <div class="nav-icon">↪</div>
+
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <h1>Dashboard</h1>
+
+        <div class="expert-profile">
+
+            <div class="avatar">
+                ME
+            </div>
+
+            <div class="profile-info">
+
+                <strong>Medical Expert</strong>
+
+                <span>Healthcare Consultant</span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+        <section class="welcome">
+
+            <h2>Welcome, Medical Expert 👋</h2>
+
+            <p>
+                Manage student consultations and provide professional guidance.
+            </p>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-header">
+
+                    <div>
+                        <h3>Total Consultations</h3>
+
+                        <div class="number">
+                            {{ total }}
+                        </div>
+                    </div>
+
+                    <div class="stat-icon">
+                        ☷
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-header">
+
+                    <div>
+                        <h3>Pending</h3>
+
+                        <div class="number">
+                            {{ pending }}
+                        </div>
+                    </div>
+
+                    <div class="stat-icon">
+                        ⏳
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-header">
+
+                    <div>
+                        <h3>In Review</h3>
+
+                        <div class="number">
+                            {{ in_review }}
+                        </div>
+                    </div>
+
+                    <div class="stat-icon">
+                        ◉
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-header">
+
+                    <div>
+                        <h3>Completed</h3>
+
+                        <div class="number">
+                            {{ completed }}
+                        </div>
+                    </div>
+
+                    <div class="stat-icon">
+                        ✓
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECENT CONSULTATIONS -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>Recent Consultations</h2>
+
+                <a
+                    href="{{ url_for('expert.consultations') }}"
+                    class="view-all"
+                >
+                    View All →
+                </a>
+
+            </div>
+
+
+            {% if recent %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+
+                        <th>Subject</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for consultation in recent %}
+
+                    <tr>
+
+                        <td class="student">
+                            {{ consultation["student_name"] }}
+                        </td>
+
+                        <td>
+                            {{ consultation["subject"] }}
+                        </td>
+
+                        <td>
+
+                            <span class="status">
+                                {{ consultation["status"] }}
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="{{ url_for(
+                                    'expert.consultation_detail',
+                                    consultation_id=consultation['id']
+                                ) }}"
+                                class="action"
+                            >
+                                View →
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="empty">
+
+                <div style="font-size:40px;">
+                    📋
+                </div>
+
+                <p>No consultations yet.</p>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</main>
+
+</body>
+</html>
